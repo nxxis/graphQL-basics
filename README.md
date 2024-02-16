@@ -1,0 +1,2 @@
+# graphQL-basics
+GraphQL API
