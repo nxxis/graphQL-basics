@@ -7,13 +7,25 @@ import mongoose from 'mongoose';
 export class PetsRepository {
   constructor(@InjectModel(Pet.name) private petModel: mongoose.Model<Pet>) {}
 
-  async createPetRepository(data: Pet) {
+  async createPetRepository(data) {
     try {
-      const pet = new this.petModel({ name: data.name, type: data.type });
+      const pet = new this.petModel({ ...data });
       if (!pet) {
         throw new Error('Error creating pet');
       }
       return pet.save();
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  async findAllPetsRepository() {
+    try {
+      const pets = await this.petModel.find({});
+      if (!pets) {
+        throw new Error('Error fetching pets');
+      }
+      return pets;
     } catch (error) {
       throw new Error(error);
     }

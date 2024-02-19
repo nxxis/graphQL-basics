@@ -2,20 +2,42 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CreatePetResponse {
+  name: String!
+  type: String!
+}
+
 type Pet {
   name: String!
   type: String!
 }
 
+type FindAllPetsResponse {
+  pets: [Pet!]!
+}
+
+type CreateUserResponse {
+  name: String!
+  email: String!
+  password: String!
+}
+
 type Query {
-  getPets: [Pet!]!
+  getPets: FindAllPetsResponse!
 }
 
 type Mutation {
-  createPet(CreatePetInput: CreatePetInput!): Pet!
+  createPet(CreatePetInput: CreatePetInput!): CreatePetResponse!
+  createUser(CreateUserInput: CreateUserInput!): CreateUserResponse!
 }
 
 input CreatePetInput {
   name: String!
   type: String!
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
 }

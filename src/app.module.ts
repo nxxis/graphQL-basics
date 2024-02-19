@@ -7,6 +7,8 @@ import { ApolloDriver } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { join } from 'path';
     MongooseModule.forRoot(
       'mongodb+srv://task-app:task-app@cluster0.gpgs8ft.mongodb.net/pets-app?retryWrites=true&w=majority'
     ),
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
