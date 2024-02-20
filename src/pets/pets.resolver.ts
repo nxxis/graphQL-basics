@@ -5,8 +5,11 @@ import {
   CreatePetResponse,
   FindAllPetsResponse,
 } from './dtos/input/pets.response';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 @Resolver()
+@UseGuards(JwtAuthGuard)
 export class PetsResolver {
   constructor(private petsService: PetsService) {}
 

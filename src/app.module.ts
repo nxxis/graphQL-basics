@@ -9,6 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UserModule } from './user/user.module';
     ),
     AuthModule,
     UserModule,
+    // PassportModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -5,6 +5,7 @@ import { CreatePetInput } from './dtos/input/pets.input';
 @Injectable()
 export class PetsService {
   constructor(private petsRepository: PetsRepository) {}
+
   async createPetService(body: CreatePetInput) {
     return await this.petsRepository.createPetRepository({ ...body });
   }

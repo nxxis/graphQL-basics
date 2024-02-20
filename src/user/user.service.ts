@@ -6,7 +6,11 @@ export class UserService {
   constructor(private userRepository: UserRepository) {}
 
   async createUserService(data) {
-    return await this.userRepository.createUserRepository({ ...data });
+    try {
+      return await this.userRepository.createUserRepository(data);
+    } catch (error) {
+      return error;
+    }
   }
 
   async checkUserExistService(email: string) {

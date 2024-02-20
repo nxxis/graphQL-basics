@@ -8,7 +8,6 @@ export class CreateUserInput {
   @Field()
   name: string;
 
-  @IsString()
   @IsNotEmpty()
   @IsEmail()
   @Field()

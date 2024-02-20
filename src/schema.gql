@@ -17,9 +17,7 @@ type FindAllPetsResponse {
 }
 
 type CreateUserResponse {
-  name: String!
-  email: String!
-  password: String!
+  token: String!
 }
 
 type Query {

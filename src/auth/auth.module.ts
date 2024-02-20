@@ -1,20 +1,21 @@
 import { Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { AuthResolver } from './auth.resolver';
 import { PetsModule } from '../pets/pets.module';
-import { PetsService } from 'src/pets/pets.service';
 import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
 import { UserModule } from 'src/user/user.module';
+import { providers } from './auth.providers';
 
 @Module({
-  providers: [AuthResolver, AuthService, PetsService],
+  providers: providers,
   imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: 'insanelysecretkey',
+      secret: 'insanelySecretkey',
       signOptions: { expiresIn: '1d' },
     }),
     PetsModule,
     UserModule,
   ],
+  exports: [AuthModule, ...providers, JwtModule],
 })
 export class AuthModule {}
