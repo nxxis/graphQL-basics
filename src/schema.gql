@@ -18,6 +18,14 @@ type FindAllPetsResponse {
 
 type CreateUserResponse {
   token: String!
+  email: String!
+  id: String!
+}
+
+type LoginUserResponse {
+  token: String!
+  email: String!
+  id: String!
 }
 
 type Query {
@@ -26,7 +34,8 @@ type Query {
 
 type Mutation {
   createPet(CreatePetInput: CreatePetInput!): CreatePetResponse!
-  createUser(CreateUserInput: CreateUserInput!): CreateUserResponse!
+  SignUp(CreateUserInput: CreateUserInput!): CreateUserResponse!
+  Login(LoginUserInput: LoginUserInput!): LoginUserResponse!
 }
 
 input CreatePetInput {
@@ -36,6 +45,11 @@ input CreatePetInput {
 
 input CreateUserInput {
   name: String!
+  email: String!
+  password: String!
+}
+
+input LoginUserInput {
   email: String!
   password: String!
 }

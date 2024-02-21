@@ -19,13 +19,13 @@ export class PetsRepository {
     }
   }
 
-  async findAllPetsRepository() {
+  async findPetRepository(id) {
     try {
-      const pets = await this.petModel.find({});
-      if (!pets) {
-        throw new Error('Error fetching pets');
+      const pet = await this.petModel.findById(id);
+      if (!pet) {
+        throw new Error('Error fetching pet');
       }
-      return pets;
+      return pet;
     } catch (error) {
       throw new Error(error);
     }

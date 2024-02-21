@@ -7,6 +7,7 @@ import {
 } from './dtos/input/pets.response';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { CurrentUser } from 'src/decorators/current-user';
 
 @Resolver()
 @UseGuards(JwtAuthGuard)
@@ -14,13 +15,16 @@ export class PetsResolver {
   constructor(private petsService: PetsService) {}
 
   @Query(() => FindAllPetsResponse)
-  async getPets() {
-    const pets = await this.petsService.getPetsService();
+  async getPets(@CurrentUser() user) {
+    const pets = await this.petsService.getPetsService(user.id);
     return { pets };
   }
 
   @Mutation(() => CreatePetResponse)
-  async createPet(@Args('CreatePetInput') body: CreatePetInput) {
-    return await this.petsService.createPetService(body);
+  async createPet(
+    @Args('CreatePetInput') body: CreatePetInput,
+    @CurrentUser() user
+  ) {
+    return await this.petsService.createPetService(body, user.id);
   }
 }

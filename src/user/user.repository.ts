@@ -29,4 +29,23 @@ export class UserRepository {
       return error;
     }
   }
+
+  async addPetToUserRepository(userId: string, petId) {
+    try {
+      const user = await this.userModel.findById(userId);
+      user.petID.push(petId);
+      return await user.save();
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getUserPetsRepository(userId) {
+    try {
+      const userPets = await this.userModel.findById(userId);
+      return userPets.petID;
+    } catch (error) {
+      return error;
+    }
+  }
 }
