@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppService } from './app.service';
 import { PetsModule } from './pets/pets.module';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -9,10 +10,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -20,12 +23,14 @@ import { PassportModule } from '@nestjs/passport';
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     PetsModule,
-    MongooseModule.forRoot(
-      'mongodb+srv://task-app:task-app@cluster0.gpgs8ft.mongodb.net/pets-app?retryWrites=true&w=majority'
-    ),
+    MongooseModule.forRootAsync({
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get('DB_CONNECTION'),
+      }),
+      inject: [ConfigService],
+    }),
     AuthModule,
     UserModule,
-    // PassportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
